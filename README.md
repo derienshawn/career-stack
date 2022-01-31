@@ -5,8 +5,8 @@ Run the following command inside the "app" directory to start the app locally:
 uvicorn main:app --reload
 ```
 
-# Production
-- View the app in production:
+# Staging
+- View the app in staging:
 https://career-stack.herokuapp.com/
 
 - View API docs:
