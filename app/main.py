@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-
+from routes.user import user
 
 app = FastAPI()
+app.include_router(user)
 
 @app.get("/")
 def index():
@@ -12,4 +13,3 @@ def index():
     </html>
     """
     return HTMLResponse(content=content, status_code=200)     
-

@@ -9,6 +9,7 @@ from bson import json_util
 
 user = APIRouter()
 
+
 @user.post("/user")
 async def create_user(user: User):
     db = client["careerstack"]
@@ -22,3 +23,9 @@ async def get_all_users():
     db = client["careerstack"]
     collection = db["users"]
     return usersEntity(collection.find())
+
+@user.delete("/user/{id}")
+async def delete_user(id):
+    db = client["careerstack"]
+    collection = db["users"]
+    return userEntity(collection.find_one_and_delete({"_id":ObjectId(id)}))
