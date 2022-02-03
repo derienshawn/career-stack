@@ -3,8 +3,8 @@ from models.user import User
 from config.db import client
 from schemas.user import userEntity, usersEntity
 from bson.objectid import ObjectId
-import json
-from bson import json_util
+# import json
+# from bson import json_util
 
 
 user = APIRouter()
