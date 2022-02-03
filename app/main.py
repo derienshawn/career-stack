@@ -1,9 +1,5 @@
-from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-from routes.user import user
-
-app = FastAPI()
-app.include_router(user)
+from server import *
 
 @app.get("/")
 def index():
