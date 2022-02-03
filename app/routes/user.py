@@ -1,14 +1,11 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, FastAPI
 from models.user import User
 from config.db import client
 from schemas.user import userEntity, usersEntity
 from bson.objectid import ObjectId
 # import json
 # from bson import json_util
-
-
 user = APIRouter()
-
 
 @user.post("/user")
 async def create_user(user: User):
