@@ -1,8 +1,8 @@
 # Running the app locally
 
-Run the following command inside the "app" directory to start the app locally:
+Run the following command inside the root directory to start the app locally:
 ```
-uvicorn main:app --reload
+uvicorn server:app --reload
 ```
 
 # Staging
