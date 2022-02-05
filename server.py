@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from app.routes.user import user
+from app.routes.project import project
+
 
 
 app = FastAPI()
 app.include_router(user)
+app.include_router(project)
+
 
 
 @app.get("/")
