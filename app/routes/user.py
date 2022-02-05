@@ -3,8 +3,7 @@ from app.models.user import User
 from app.config.db import client
 from app.schemas.user import userEntity, usersEntity
 from bson.objectid import ObjectId
-# import json
-# from bson import json_util
+
 user = APIRouter()
 
 @user.post("/user")
