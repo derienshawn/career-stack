@@ -1,4 +1,4 @@
-from fastapi import APIRouter, FastAPI
+from fastapi import APIRouter
 from app.models.user import User
 from app.config.db import client
 from app.schemas.user import userEntity, usersEntity

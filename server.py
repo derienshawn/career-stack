@@ -1,9 +1,8 @@
-from fastapi import FastAPI, Request, Cookie, Header
-from fastapi.responses import RedirectResponse, JSONResponse, Response
+from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse, JSONResponse
 from app.routes.user import user
 from app.routes.project import project
 from LoginRadius import LoginRadius as LR
-from typing import Optional
 import requests
 
 LR.API_KEY = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
@@ -19,7 +18,6 @@ local_url = "https://career-stack.hub.loginradius.com/auth.aspx?action=register&
 
 @app.get("/register")
 def register():
-    session.get(staging_url)
 
     # URL for local testing -- uncomment when running locally
     # return RedirectResponse(local_url)
