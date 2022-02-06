@@ -10,7 +10,7 @@ import os
 # Redis config to run Locally
 # redis = redis.Redis(host= 'localhost',port= '6379')
 
-redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+redis_url = os.getenv('REDISTOGO_URL')
 redis = redis.from_url(redis_url)
 
 LR.API_KEY = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
