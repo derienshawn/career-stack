@@ -13,7 +13,7 @@ loginradius = LR()
 app.include_router(user, tags=["user"])
 app.include_router(project, tags=["project"])
 session = requests.Session()
-staging_url = "https://career-stack.hub.loginradius.com/auth.aspx?action=register&return_url=https://career-stack.herokuapp.com"
+staging_url = "https://career-stack.hub.loginradius.com/auth.aspx?action=register&return_url=https://career-stack.herokuapp.com/login"
 local_url = "https://career-stack.hub.loginradius.com/auth.aspx?action=register&return_url=http://127.0.0.1:8000/login"
 
 @app.get("/register")
