@@ -10,7 +10,7 @@ import os
 # Redis config to run Locally
 # redis = redis.Redis(host= 'localhost',port= '6379')
 
-redis_url = os.getenv('REDISTOGO_URL')
+redis_url = os.getenv('redis://:pf05951689bb9e6e93d4c44c9900b232c92edd25a4d978563c490744fbd41aaf2@ec2-18-205-170-108.compute-1.amazonaws.com:23989', 'redis://localhost:6379')
 redis = redis.from_url(redis_url)
 print("**********************",redis_url)
 
