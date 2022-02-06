@@ -1,8 +1,9 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Cookie, Header
 from fastapi.responses import RedirectResponse, JSONResponse, Response
 from app.routes.user import user
 from app.routes.project import project
 from LoginRadius import LoginRadius as LR
+from typing import Optional
 import requests
 
 LR.API_KEY = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
@@ -10,38 +11,47 @@ LR.API_SECRET = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
 
 app = FastAPI()
 loginradius = LR()
-app.include_router(user)
-app.include_router(project)
-r = Response()
-
-
+app.include_router(user, tags=["user"])
+app.include_router(project, tags=["project"])
+session = requests.Session()
+staging_url = "https://career-stack.hub.loginradius.com/auth.aspx?action=register&return_url=https://career-stack.herokuapp.com"
+local_url = "https://career-stack.hub.loginradius.com/auth.aspx?action=register&return_url=http://127.0.0.1:8000/login"
 
 @app.get("/register")
 def register():
+    session.get(staging_url)
 
     # URL for local testing -- uncomment when running locally
-    # return RedirectResponse("https://career-stack.hub.loginradius.com/auth.aspx?action=register&return_url=http://127.0.0.1:8000/login")
+    # return RedirectResponse(local_url)
 
     # URL for staging testing -- uncomment when running on Heroku staging
-    return RedirectResponse("https://career-stack.hub.loginradius.com/auth.aspx?action=register&return_url=http://career-stack.herokuapp.com/login")
-
+    return RedirectResponse(staging_url)
 
 
 @app.get("/login")
 def login(request: Request):
     params = dict(request.query_params)
-    token = params['token']
-    print("******************************************", token)
-    res = loginradius.authentication.get_profile_by_access_token(token)
+    token_from_params = params['token']
+    session.headers.update({'token': token_from_params})
+    res = loginradius.authentication.get_profile_by_access_token(token_from_params)
 
-    #Need to store token in a cookie
-    r.set_cookie(key="token", value=token)
+    if token_from_params is None:
+        # redirect the user to our LoginRadius login URL if no access token is provided
+        return RedirectResponse(staging_url)
+
+    return JSONResponse(content=res, headers={'token': token_from_params})
+
+@app.get("/logout")
+def logout():
+    token = session.headers.get('token')
 
     if token is None:
-        # redirect the user to our LoginRadius login URL if no access token is provided
-        return RedirectResponse("https://career-stack.hub.loginradius.com/auth.aspx?action=register&return_url=https://career-stack.herokuapp.com")
+        return "No token found"
 
-    return JSONResponse(content=res)
+    # invalidate the access token with LoginRadius API
+    loginradius.authentication.auth_in_validate_access_token(token)
+    session.headers.clear()
+    return RedirectResponse(staging_url)
 
 @app.get("/user-profile")
 def get_user(id: str):
