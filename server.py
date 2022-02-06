@@ -38,7 +38,7 @@ def register():
 def login(request: Request):
     params = dict(request.query_params)
     token_from_params = params['token']
-    r.set('token', token_from_params)
+    redis.set('token', token_from_params)
     res = loginradius.authentication.get_profile_by_access_token(token_from_params)
 
     if token_from_params is None:
@@ -49,7 +49,7 @@ def login(request: Request):
 
 @app.get("/logout")
 def logout():
-    token_as_bytes = r.get('token')
+    token_as_bytes = redis.get('token')
     token_as_str = str(token_as_bytes, 'UTF-8')
 
     if token_as_str is None:
