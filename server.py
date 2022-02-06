@@ -9,10 +9,6 @@ import redis
 # Redis config to run Locally
 # redis = redis.Redis(host= 'localhost',port= '6379')
 
-# Redis config to run Staging on Heroku
-redis = redis.Redis(host= 'https://career-stack.herokuapp.com',port= '6379')
-
-
 LR.API_KEY = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
 LR.API_SECRET = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
 
