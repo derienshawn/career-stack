@@ -10,10 +10,10 @@ import os
 # Redis config to run Locally
 # redis = redis.Redis(host= 'localhost',port= '6379')
 
+#Redis config to run staging on Heroku
 redis_url = os.environ.get('REDIS_URL', 'redis://localhost:6379')
 redis = redis.from_url(redis_url)
 
-print("**********************",redis_url)
 LR.API_KEY = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
 LR.API_SECRET = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
 
