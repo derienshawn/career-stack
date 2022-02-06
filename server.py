@@ -3,11 +3,15 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from app.routes.user import user
 from app.routes.project import project
 from LoginRadius import LoginRadius as LR
-import requests
 import redis
+import requests
+import os
 
 # Redis config to run Locally
 # redis = redis.Redis(host= 'localhost',port= '6379')
+
+redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+redis = redis.from_url(redis_url)
 
 LR.API_KEY = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
 LR.API_SECRET = "5a253b16-8b8e-49da-8bd6-5fcf6ad5a968"
@@ -34,7 +38,7 @@ def register():
 def login(request: Request):
     params = dict(request.query_params)
     token_from_params = params['token']
-    redis.set('token', token_from_params)
+    r.set('token', token_from_params)
     res = loginradius.authentication.get_profile_by_access_token(token_from_params)
 
     if token_from_params is None:
@@ -45,7 +49,7 @@ def login(request: Request):
 
 @app.get("/logout")
 def logout():
-    token_as_bytes = redis.get('token')
+    token_as_bytes = r.get('token')
     token_as_str = str(token_as_bytes, 'UTF-8')
 
     if token_as_str is None:
