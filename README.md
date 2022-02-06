@@ -2,7 +2,7 @@
 
 Career-Stack is a platform to connect IT job experience seekers with project creators in need of technical talent.
 # Staging
-- In server.py:
+- Configure server.py RedirectResponse URL based on your environment:
 ```python
     # URL for LOCAL testing -- uncomment when running locally
     return RedirectResponse(local_url)
