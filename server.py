@@ -1,11 +1,8 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import RedirectResponse, JSONResponse
 from app.routes.user import user
 from app.routes.project import project
-from LoginRadius import LoginRadius as LR
 from app.helpers import login_radius
 import redis
-import requests
 import os
 
 # Redis config to run Locally
