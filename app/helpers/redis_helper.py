@@ -27,4 +27,4 @@ def set_token(request: Request):
         token = redis.set('token', token_from_params)
     except:
         print(">>>>>>>>> TOKEN NOT SET <<<<<<<<<<<<<")
-    return token
+    return token_from_params

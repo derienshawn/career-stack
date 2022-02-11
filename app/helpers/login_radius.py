@@ -24,7 +24,6 @@ def register():
 
 def login_radius_redirect(request: Request):
     user_token = redis_helper.set_token(request)
-    print(">>>>>>>> USER TOKEN LR REDIRECT", user_token)
     res = loginradius.authentication.get_profile_by_access_token(user_token)
 
     if user_token is None:
