@@ -1,6 +1,7 @@
 def projectEntity(item) -> dict:
     return {
         "_id":str(item["_id"]),
+        "project_id": item["project_id"],
         "name": item["name"],
         "icon_url": item["icon_url"],
         "description": item["description"],

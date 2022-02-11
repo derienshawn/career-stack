@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter
 from app.models.user import User
 from app.config.db import client
@@ -15,7 +16,6 @@ async def create_user(user: User):
 
 @user.get("/users")
 async def get_all_users():
-    user_list = []
     db = client["careerstack"]
     collection = db["users"]
     return usersEntity(collection.find())
