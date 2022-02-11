@@ -34,8 +34,7 @@ def login_radius_redirect(request: Request):
     return JSONResponse(content=res)
 
 def logout():
-    token_as_bytes = redis_helper.get_token()
-    token_as_str = str(token_as_bytes, 'UTF-8')
+    token_as_str = redis_helper.get_token()
 
     if token_as_str is None:
         return "No token found"
