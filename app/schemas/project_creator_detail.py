@@ -1,4 +1,4 @@
-def projectDetailEntity(item) -> dict:
+def projectCreatorDetailEntity(item) -> dict:
     return {
         "_id":str(item["_id"]),
         "project_id": item["project_id"],
@@ -7,5 +7,5 @@ def projectDetailEntity(item) -> dict:
         "last_name": item["last_name"],
         "email": item["email"]
     }
-def projectDetailListEntity(entity) -> list:
-    return [projectDetailEntity(item) for item in entity]
+def projectCreatorDetailListEntity(entity) -> list:
+    return [projectCreatorDetailEntity(item) for item in entity]

@@ -1,4 +1,4 @@
-from app.models.project_detail import ProjectDetail
+from app.models.project_creator_detail import ProjectDetail
 from app.helpers import login_radius
 from app.helpers import redis_helper
 from fastapi.responses import JSONResponse

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from app.routes.user import user
 from app.routes.project import project
-from app.routes.project_detail import project_detail
+from app.routes.project_creator_detail import project_creator_detail
 from app.routes.applicant_detail import applicant_detail
 from app.helpers import login_radius
 import redis
@@ -16,8 +16,8 @@ redis = redis.from_url(redis_url)
 
 app = FastAPI()
 app.include_router(project, tags=["Project"])
-app.include_router(project_detail, tags=["Project Detail"])
-app.include_router(applicant_detail, tags=["Applicant Detail"])
+app.include_router(project_creator_detail, tags=["Project Creator Details"])
+app.include_router(applicant_detail, tags=["Applicant Details"])
 
 
 @app.get("/register")

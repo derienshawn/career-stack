@@ -4,8 +4,6 @@ from app.models.project_milestone import ProjectMilestone
 from app.config.db import client
 from app.schemas.project import projectEntity, projectsEntity
 from app.schemas.project_milestone import projectMilestoneEntity, projectMilestoneListEntity
-from app.schemas.project_detail import projectDetailEntity
-from app.helpers.project_helper import create_project_detail
 from app.enum import project_status
 from bson.objectid import ObjectId
 import uuid
@@ -41,27 +39,27 @@ async def delete_project(project_id):
     collection = db["projects"]
     return projectEntity(collection.find_one_and_delete({"project_id": project_id}))
 
-@project.get("/project-detail/{id}")
-async def get_project_details(id):
-    db = client["careerstack"]
-    collection = db["project_details"]
-    project = projectDetailEntity(collection.find_one({'_id': ObjectId(id)}))
-    return projectDetailEntity(project)
 
-@project.post("/project/{id}/milestone")
+@project.post("/projects/milestone")
 async def create_project_milestone(project_milestone: ProjectMilestone):
     db = client["careerstack"]
     collection = db["project_milestones"]
     collection.insert_one(dict(project_milestone))
     return "Milestone created"
 
-@project.get("/milestones/{project_id}")
-async def get_project_milestones(project_id):
+@project.get("/projects/milestones/{project_id}", summary="Get project milestones by project_id.")
+async def get_project_milestones_by_project_id(project_id):
     db = client["careerstack"]
     collection = db["project_milestones"]
     return projectMilestoneListEntity(collection.find({'project_id': project_id}))
 
-@project.delete("/milestones/{milestone_id}")
+@project.get("/projects/milestones/{id}", summary="Get project milestones by milestone Id.")
+async def get_project_milestone_by_milestone_id(id):
+    db = client["careerstack"]
+    collection = db["project_milestones"]
+    return projectMilestoneEntity(collection.find({'_id"': ObjectId(id)}))
+
+@project.delete("/projects/milestones/{milestone_id}")
 async def delete_project_milestones(milestone_id):
     db = client["careerstack"]
     collection = db["project_milestones"]
