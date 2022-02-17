@@ -4,7 +4,6 @@ from app.helpers import redis_helper
 from fastapi.responses import JSONResponse
 import json
 
-
 def create_project_detail(project):
     project_creator_token = redis_helper.get_token()
     project_creator_info = login_radius.get_user(project_creator_token)

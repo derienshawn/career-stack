@@ -24,7 +24,7 @@ Run the following command inside the root directory to start the app locally:
 uvicorn server:app --reload
 ```
 - View the app in staging:
-https://career-stack.herokuapp.com/
+https://career-stack.herokuapp.com/register
 
 - View API docs:
 https://career-stack.herokuapp.com/docs

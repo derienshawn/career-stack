@@ -1,10 +1,11 @@
 def userEntity(item) -> dict:
     return {
         "_id":str(item["_id"]),
+        "user_id": item["user_id"],
         "first_name": item["first_name"],
         "last_name": item["last_name"],
         "email": item["email"],
-        "password": item["password"]
+        "image_url": item["image_url"]
     }
 
 def usersEntity(entity) -> list:

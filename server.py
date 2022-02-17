@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from app.routes.user import user
 from app.routes.project import project
 from app.routes.project_detail import project_detail
+from app.routes.applicant_detail import applicant_detail
 from app.helpers import login_radius
 import redis
 import os
@@ -17,13 +18,12 @@ app = FastAPI()
 app.include_router(user, tags=["User"])
 app.include_router(project, tags=["Project"])
 app.include_router(project_detail, tags=["Project Detail"])
-
+app.include_router(applicant_detail, tags=["Appliacnt Detail"])
 
 
 @app.get("/register")
 def register():
    return login_radius.register()
-
 
 @app.get("/register-redirect")
 def login(request: Request):
@@ -33,6 +33,18 @@ def login(request: Request):
 def logout():
     return login_radius.logout()
 
-@app.get("/user-profile")
-def get_user(id: str):
-    return login_radius.get_user(id)
+@app.get("/user-profile", summary="Get User profile of the currently logged in user.")
+def get_current_logged_in_user_profile():
+    return login_radius.get_current_logged_in_user_profile()
+
+@app.get("/user-profile/{uid}", summary="Get User Profile by Uid")
+def get_user_profile_by_id(uid):
+    return login_radius.get_user_profile_by_user_id(uid)
+
+@app.delete("/user-profile/", summary="Delete User account by email.", description="Send email as string request parameter.")
+def delete_user_account_by_email(email):
+    return login_radius.delete_user_by_email(email)
+
+@app.post("user-profile/{uid}", summary="Update User profile by Uid.", description="Send updated User values as requests params.")
+def update_user_profile_by_uid(uid):
+    return login_radius.update_user_by_uid(uid)

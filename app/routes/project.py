@@ -1,52 +1,68 @@
 from fastapi import APIRouter
-from fastapi.responses import JSONResponse
 from app.models.project import Project
+from app.models.project_milestone import ProjectMilestone
 from app.config.db import client
 from app.schemas.project import projectEntity, projectsEntity
+from app.schemas.project_milestone import projectMilestoneEntity, projectMilestoneListEntity
 from app.schemas.project_detail import projectDetailEntity
 from app.helpers.project_helper import create_project_detail
+from app.enum import project_status
 from bson.objectid import ObjectId
 import uuid
-import json
 
 project = APIRouter()
+
 
 @project.post("/project")
 async def create_project(project: Project):
     project_id = str(uuid.uuid1())
     project.project_id = project_id
+    project.project_status = str(project_status.ProjectStatus.UNPUBLISHED).replace('ProjectStatus.', '')
     db = client["careerstack"]
     collection = db["projects"]
     collection.insert_one(dict(project))
-    project_info_to_create_details = projectEntity(collection.find_one({'project_id': project_id}))
-    project_details = create_project_detail(project_info_to_create_details)
-    collection = db["project_details"]
-    project_details_formatted = json.loads(project_details.body)
-    collection.insert_one(project_details_formatted)
-    return JSONResponse(content=str(project_details.body, 'UTF-8'))
+    return "Project Created"
 
-@project.get("/projects")
+@project.get("/projects", summary="Returns all projects.")
 async def get_all_projects():
     db = client["careerstack"]
     collection = db["projects"]
     return projectsEntity(collection.find())
 
-@project.delete("/project/{id}")
-async def delete_project(id):
+@project.get("/projects/{project_id}", summary="Get single project using project_id")
+async def get_project_by_project_id(project_id):
     db = client["careerstack"]
     collection = db["projects"]
-    project_to_delete = projectEntity(collection.find_one({'_id': ObjectId(id)}))
-    project_to_delete["_id"]
-    collection = db["project_details"]
-    projectDetailEntity(collection.find_one({'project_id': project_to_delete["project_id"]}))
-    projectDetailEntity(collection.find_one_and_delete({'project_id': project_to_delete["project_id"]}))
+    return projectsEntity(collection.find({'project_id': project_id}))
+
+@project.delete("/project/{project_id}", summary="Delete a project by project_id.")
+async def delete_project(project_id):
+    db = client["careerstack"]
     collection = db["projects"]
-    return projectEntity(collection.find_one_and_delete({"_id":ObjectId(id)}))
+    return projectEntity(collection.find_one_and_delete({"project_id": project_id}))
 
 @project.get("/project-detail/{id}")
 async def get_project_details(id):
     db = client["careerstack"]
-    collection = db["projects"]
-    project = projectEntity(collection.find_one({'_id': ObjectId(id)}))
-    test_project = create_project_detail(project)
-    return test_project
+    collection = db["project_details"]
+    project = projectDetailEntity(collection.find_one({'_id': ObjectId(id)}))
+    return projectDetailEntity(project)
+
+@project.post("/project/{id}/milestone")
+async def create_project_milestone(project_milestone: ProjectMilestone):
+    db = client["careerstack"]
+    collection = db["project_milestones"]
+    collection.insert_one(dict(project_milestone))
+    return "Milestone created"
+
+@project.get("/milestones/{project_id}")
+async def get_project_milestones(project_id):
+    db = client["careerstack"]
+    collection = db["project_milestones"]
+    return projectMilestoneListEntity(collection.find({'project_id': project_id}))
+
+@project.delete("/milestones/{milestone_id}")
+async def delete_project_milestones(milestone_id):
+    db = client["careerstack"]
+    collection = db["project_milestones"]
+    return projectMilestoneEntity(collection.find_one_and_delete({'_id': ObjectId(milestone_id)}))

@@ -4,6 +4,7 @@ def projectEntity(item) -> dict:
         "project_id": item["project_id"],
         "name": item["name"],
         "icon_url": item["icon_url"],
+        "images": item["images"],
         "description": item["description"],
         "estimated_deadline": item["estimated_deadline"],
         "project_budget": item["project_budget"],
