@@ -15,10 +15,9 @@ redis_url = os.environ.get('REDIS_URL', 'redis://localhost:6379')
 redis = redis.from_url(redis_url)
 
 app = FastAPI()
-app.include_router(user, tags=["User"])
 app.include_router(project, tags=["Project"])
 app.include_router(project_detail, tags=["Project Detail"])
-app.include_router(applicant_detail, tags=["Appliacnt Detail"])
+app.include_router(applicant_detail, tags=["Applicant Detail"])
 
 
 @app.get("/register")
