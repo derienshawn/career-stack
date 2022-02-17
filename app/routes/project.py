@@ -53,12 +53,6 @@ async def get_project_milestones_by_project_id(project_id):
     collection = db["project_milestones"]
     return projectMilestoneListEntity(collection.find({'project_id': project_id}))
 
-@project.get("/projects/milestones/{id}", summary="Get project milestones by milestone Id.")
-async def get_project_milestone_by_milestone_id(id):
-    db = client["careerstack"]
-    collection = db["project_milestones"]
-    return projectMilestoneEntity(collection.find({'_id"': ObjectId(id)}))
-
 @project.delete("/projects/milestones/{milestone_id}")
 async def delete_project_milestones(milestone_id):
     db = client["careerstack"]
