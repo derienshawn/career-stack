@@ -3,6 +3,7 @@ from app.models.project_creator_detail import ProjectCreatorDetail
 from app.config.db import client
 from app.schemas.project_creator_detail import projectCreatorDetailEntity, projectCreatorDetailListEntity
 from bson.objectid import ObjectId
+from app.helpers.integromat_helper import project_creator_webhook_ping
 
 project_creator_detail = APIRouter()
 
@@ -11,6 +12,7 @@ async def create_project_creator_details(project_creator_details: ProjectCreator
     db = client["careerstack"]
     collection = db["project_creator_details"]
     collection.insert_one(dict(project_creator_details))
+    project_creator_webhook_ping(dict(project_creator_details))
     return "Project creator details created"
 
 @project_creator_detail.get("/project-creator/{id}")
