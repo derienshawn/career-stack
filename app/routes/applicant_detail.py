@@ -17,7 +17,7 @@ async def create_applicant_detail(ad: ApplicantDetail):
 async def get_applicant_detail_by_id(id):
     db = client["careerstack"]
     collection = db["applicant_details"]
-    return applicantDetailEntity(collection.find_one({"_id":ObjectId(id)}))
+    return applicantDetailListEntity(collection.find({"user_id":id}))
 
 @applicant_detail.delete("/applicant-detail/{id}")
 async def delete_project_detail_by_id(id):
