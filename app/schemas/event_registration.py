@@ -6,3 +6,6 @@ def eventRegistrationEntity(item) -> dict:
         "registered_at": item["registered_at"],
         "registration_status": item["registration_status"]
     }
+
+def eventRegistrationListEntity(entity) -> list:
+    return [eventRegistrationEntity(item) for item in entity]

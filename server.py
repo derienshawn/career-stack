@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from app.routes.user import user
 from app.routes.project import project
+from app.routes.user_dashboard import dashboard
 from app.routes.project_creator_detail import project_creator_detail
 from app.routes.applicant_detail import applicant_detail
 from app.routes.event import event
@@ -20,6 +21,7 @@ app.include_router(project, tags=["Project"])
 app.include_router(project_creator_detail, tags=["Project Creator Details"])
 app.include_router(applicant_detail, tags=["Applicant Details"])
 app.include_router(event, tags=["Events"])
+app.include_router(dashboard, tags=["User Dashboard"])
 
 
 @app.get("/register")
