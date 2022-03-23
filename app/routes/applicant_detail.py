@@ -4,7 +4,6 @@ from app.config.db import client
 from app.schemas.applicant_detail import applicantDetailEntity, applicantDetailListEntity
 from bson.objectid import ObjectId
 from app.helpers.integromat_helper import applicant_detail_webhook_ping
-import json
 
 applicant_detail = APIRouter()
 
