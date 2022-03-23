@@ -3,6 +3,7 @@ from app.routes.user import user
 from app.routes.project import project
 from app.routes.project_creator_detail import project_creator_detail
 from app.routes.applicant_detail import applicant_detail
+from app.routes.event import event
 from app.helpers import login_radius
 import redis
 import os
@@ -18,6 +19,7 @@ app = FastAPI()
 app.include_router(project, tags=["Project"])
 app.include_router(project_creator_detail, tags=["Project Creator Details"])
 app.include_router(applicant_detail, tags=["Applicant Details"])
+app.include_router(event, tags=["Events"])
 
 
 @app.get("/register")
